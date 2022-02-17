@@ -6,9 +6,9 @@ exports.PostFormation = async (req, res) => {
       try {
             const newFormation = new formation({ ...req.body });
             const response = await newFormation.save();
-            res.send({ response: response, message: "formation is saved" });
+            res.send({ response: response, message: "formation enregistrer" });
       } catch (error) {
-            res.status(404).send({ message: "can not save it" }, error);
+            res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
       }
     }
 
@@ -16,20 +16,19 @@ exports.PostFormation = async (req, res) => {
 exports.GetAllFormation = async (req, res) => {
       try {
             const result = await formation.find()
-                  .populate("user")
-            res.send({ response: result, message: "getting formation successfully" });
+            res.send({ response: result, message: "avoir formation avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "can not get formation" });
+            res.status(400).send({ message: "ne peut pas obtenir le formation" });
       }
 };
 
 //GET one formation
 exports.GetOneFormation = async (req, res) => {
       try {
-            const result = await formation.findOne({ _id: req.params.id }).populate("user")
-            res.send({ response: result, message: "getting formation successfully" });
+            const result = await formation.findOne({ _id: req.params.id })
+            res.send({ response: result, message: "avoir formation avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "there is no formation with this id" });
+            res.status(400).send({ message: "il n'y a pas de formation avec cet identifiant" });
       }
 };
 
@@ -38,12 +37,12 @@ exports.DeleteOneFormation = async (req, res) => {
 
       try {
             const result = await formation.deleteOne({ _id: req.params.id })
-            result.n
-                  ? res.send({ message: "formation deleted" })
-                  : res.send({ message: "there is no formation with this id" });
+            result
+                  ? res.send({ message: "formation supprimé" })
+                  : res.send({ message: "il n'y a pas des formations avec cet identifiant" });
 
       } catch (error) {
-            res.status(400).send({ message: "there is no formation with this id" });
+            res.status(400).send({ message: "il n'y a pas des formations avec cet identifiant" });
       }
 };
 
@@ -54,10 +53,10 @@ exports.UpdateFormation = async (req, res) => {
                   { _id: req.params.id },
                   { $set: { ...req.body } })
             result.nModified ?
-                  res.send({ message: "formation updated", user: req.body }) :
-                  res.send({ message: "formation already updated", user: req.body })
+                  res.send({ message: "formation mis à jour", user: req.body }) :
+                  res.send({ message: "formation déjà mis à jour", user: req.body })
       } catch (error) {
-            res.status(400).send({ message: "there is not formation with this id" });
+            res.status(400).send({ message: "il n'y a pas des formation avec cet identifiant" });
       }
 };
 

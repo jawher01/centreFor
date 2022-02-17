@@ -29,13 +29,13 @@ router.get("/:id", controllers.GetOneFormation);
 
 //@method DELETE
 //@desc delete one formation by id
-//@path : http://localhost:8999/admin/formation
+//@path : http://localhost:8999/admin/formation/id
 //@Params id
 router.delete("/:id", controllers.DeleteOneFormation);
 
 //@method PUT
 //@desc update a formation by id
-//@path : http://localhost:8999/admin/formation
+//@path : http://localhost:8999/admin/formation/id
 //@Params id body
 router.put("/:id", controllers.UpdateFormation);
 

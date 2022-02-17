@@ -9,19 +9,16 @@ const ClasseSchema=new mongoose.Schema({
     duree:{
         type:String,
     },
+    nb_heure:{
+        type:String,
+    },
     calendrier:{
         type:String,
     },
-    formation: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "formation",
-    }  ,
     user: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
     }],
-   
-
 },
 {
     timestamps:true,

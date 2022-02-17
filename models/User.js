@@ -24,18 +24,29 @@ const UserSchema=new mongoose.Schema({
         type:String,
         enum:["admin","etudiant","proffeseur","admin superieur"],
     },
-    img:{
+    img:{ 
+        type:String,
+    },
+    adresse:{ 
+        type:String,
+    },
+    num_tel:{
+        type:String,
+    },
+    cv:{
+        type:String,
+    },
+    niveau_scolaire:{
        
         type:String,
-    }
-    //adresse
-    //numtel
-    //cv
-    //niveau scolaire
-    //formation
-    //
-    
-
+    },
+    salaire:{
+        type:String,
+    },
+    formation:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "formation",
+    },
 },
 {
     timestamps:true,

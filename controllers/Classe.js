@@ -1,5 +1,5 @@
 const classe = require("../models/Classe");
-const formation=require("../models/Formation")
+
 
 
 //ajouter un class
@@ -7,22 +7,19 @@ exports.PostClasse = async (req, res) => {
       try {
             const newClasse = new classe({ ...req.body });
             const response = await newClasse.save();
-            res.send({ response: response, message: "classe is saved" });
+            res.send({ response: response, message: "classe enregistrer" });
       } catch (error) {
-            res.status(404).send({ message: "can not save it" }, error);
+            res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
       }
 };
 
 //GET all classes
 exports.GetAllClasse = async (req, res) => {
       try {
-            const result = await classe.find() .populate("formation").populate("user")
-                
-                
-                 
-            res.send({ response: result, message: "getting classe successfully" });
+            const result = await classe.find().populate("user")
+            res.send({ response: result, message: "avoir classe avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "can not get formation" });
+            res.status(400).send({ message: "ne peut pas obtenir classe" });
             console.log(error)
       }
 };
@@ -30,10 +27,10 @@ exports.GetAllClasse = async (req, res) => {
 //GET one classe
 exports.GetOneClasse = async (req, res) => {
       try {
-            const result = await classe.findOne({ _id: req.params.id }).populate("formation").populate("user")
-            res.send({ response: result, message: "getting classe successfully" });
+            const result = await classe.findOne({ _id: req.params.id }).populate("user")
+            res.send({ response: result, message: "avoir classe avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "there is no classe with this id" });
+            res.status(400).send({ message: "il n'y a pas de classe avec cet identifiant" });
       }
 };
 
@@ -42,12 +39,12 @@ exports.DeleteOneClasse = async (req, res) => {
 
       try {
             const result = await classe.deleteOne({ _id: req.params.id })
-            result.n
-                  ? res.send({ message: "classe deleted" })
-                  : res.send({ message: "there is no classe with this id" });
+            result
+                  ? res.send({ message: "classe supprimé" })
+                  : res.send({ message: "il n'y a pas de classe avec cet identifiant" });
 
       } catch (error) {
-            res.status(400).send({ message: "there is no classe with this id" });
+            res.status(400).send({ message: "il n'y a pas de classe avec cet identifiant" });
       }
 };
 
@@ -58,9 +55,9 @@ exports.UpdateClasse = async (req, res) => {
                   { _id: req.params.id },
                   { $set: { ...req.body } })
             result.nModified ?
-                  res.send({ message: "classe updated", user: req.body }) :
-                  res.send({ message: "classe already updated", user: req.body })
+                  res.send({ message: "classe mis à jour", user: req.body }) :
+                  res.send({ message: "classe déjà mis à jour", user: req.body })
       } catch (error) {
-            res.status(400).send({ message: "there is not classe with this id" });
+            res.status(400).send({ message: "il n'y a pas de classe avec cet identifiant" });
       }
 };

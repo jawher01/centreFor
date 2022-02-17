@@ -18,13 +18,17 @@ const isAuth = require("../middleware/passport");
 // register
 router.post("/register", registerRules(), validation, controllers.register);
 
+
+
 //@method POST
 //@desc POST A USER
 // @PATH  http://localhost:8999/login
 // @Params  Body
-// register
 // login
 router.post("/login", loginRules(), validation, controllers.login);
+
+
+
 
 //@method GET
 //@desc GET A USER
@@ -39,13 +43,31 @@ router.get("/current", isAuth(), controllers.current);
 
 //@method DELETE
 //@desc delete one user by id
-//@path : http://localhost:8999/user/admin
+//@path : http://localhost:8999/admin-sup/:id
 //@Params id
 router.delete("/admin-sup/:id", controllers.DeleteOneUser);
 
 
 
+//@method GET
+//@desc get all user 
+//@path : http://localhost:8999/admin-sup
+//@Params 
+router.get("/admin-sup",controllers.GetAllUser)
 
 
+//@method PUT
+//@desc update a profile by id
+//@path : http://localhost:8999/profile/:id
+//@Params id body
+router.put("/profile/:id",controllers.UpdateUser)
+
+
+
+//@method GET
+//@desc getting user by id
+//@path : http://localhost:8999/admin/:id
+//@Params id body
+router.get("/admin/:id",controllers.GetOneUser)
 
 module.exports = router;

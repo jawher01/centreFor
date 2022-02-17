@@ -10,6 +10,10 @@ const FormationSchema=new mongoose.Schema({
         required:true,
         type:String
     },
+    type:{
+        type:String,
+        required:true,
+    },
     duree:{  
         type:String, 
     },
@@ -22,17 +26,10 @@ const FormationSchema=new mongoose.Schema({
     date_fin:{
         type:String,
     },
-    user:[ {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
-    } ] ,
-   //type accelerer
 },
 {
     timestamps:true,
 }
-
-
 )
 
 module.exports=mongoose.model("formation",FormationSchema);

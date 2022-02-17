@@ -6,9 +6,9 @@ exports.PostEvenement = async (req, res) => {
       try {
             const newEvenement = new evenement({ ...req.body });
             const response = await newEvenement.save();
-            res.send({ response: response, message: "evenement is saved" });
+            res.send({ response: response, message: "evenement enregistrer" });
       } catch (error) {
-            res.status(404).send({ message: "can not save it" }, error);
+            res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
       }
 };
 
@@ -17,12 +17,12 @@ exports.GetAllEvenement= async (req, res) => {
       try {
             const result = await evenement.find()
             if(result){
-            res.send({ response: result, message: "getting evenement successfully" });
+            res.send({ response: result, message: "avoir evenements avec succès" });
             }else{
-                res.status(403).send({message:"can not get evenement"})
+                res.status(403).send({message:"ne peut pas obtenir l'evenements"})
             }
       } catch (error) {
-            res.status(400).send({ message: "can not get evenement" });
+            res.status(400).send({ message: "ne peut pas obtenir l'evenements" });
       }
 };
 
@@ -30,9 +30,9 @@ exports.GetAllEvenement= async (req, res) => {
 exports.GetOneEvenement = async (req, res) => {
       try {
             const result = await evenement.findOne({ _id: req.params.id })
-            res.send({ response: result, message: "getting evenement successfully" });
+            res.send({ response: result, message: "avoir evenement avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "there is no evenement with this id" });
+            res.status(400).send({ message: "il n'y a pas de evenement avec cet identifiant" });
       }
 };
 
@@ -41,12 +41,12 @@ exports.DeleteOneEvenement= async (req, res) => {
 
       try {
             const result = await evenement.deleteOne({ _id: req.params.id })
-            result.n
-                  ? res.send({ message: "evenement deleted" })
-                  : res.send({ message: "there is no evenement with this id" });
+            result
+                  ? res.send({ message: "classe supprimé" })
+                  : res.send({ message: "il n'y a pas des evenements avec cet identifiant" });
 
       } catch (error) {
-            res.status(400).send({ message: "there is no evenement with this id" });
+            res.status(400).send({ message: "il n'y a pas des evenements avec cet identifiant" });
       }
 };
 
@@ -57,10 +57,10 @@ exports.UpdateEvenement = async (req, res) => {
                   { _id: req.params.id },
                   { $set: { ...req.body } })
             result.nModified ?
-                  res.send({ message: "evenement updated", user: req.body }) :
-                  res.send({ message: "evenement already updated", user: req.body })
+                  res.send({ message: "evenement mis à jour", user: req.body }) :
+                  res.send({ message: "evenement déjà mis à jour", user: req.body })
       } catch (error) {
-            res.status(400).send({ message: "there is not evenement with this id" });
+            res.status(400).send({ message: "il n'y a pas des evenements avec cet identifiant" });
       }
 };
 

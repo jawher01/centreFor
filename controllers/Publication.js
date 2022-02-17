@@ -1,5 +1,5 @@
 const publication = require("../models/Publication");
-const user=require("../models/User")
+
 
 
 //post a publication
@@ -17,7 +17,6 @@ exports.Postpublication = async (req, res) => {
 exports.GetAllPublication = async (req, res) => {
       try {
             const result = await publication.find()
-                  .populate("comments")
             
             res.send({ response: result, message: "getting publications successfully" });
       } catch (error) {
@@ -28,7 +27,7 @@ exports.GetAllPublication = async (req, res) => {
 //GET one publication
 exports.GetOnePublication = async (req, res) => {
       try {
-            const result = await publication.findOne({ _id: req.params.id }).populate("comments")
+            const result = await publication.findOne({ _id: req.params.id })
             res.send({ response: result, message: "getting publication successfully" });
       } catch (error) {
             res.status(400).send({ message: "there is no publication with this id" });
@@ -40,7 +39,7 @@ exports.DeleteOnePublication = async (req, res) => {
 
       try {
             const result = await publication.deleteOne({ _id: req.params.id })
-            result.n
+            result
                   ? res.send({ message: "publication deleted" })
                   : res.send({ message: "there is no publication with this id" });
 

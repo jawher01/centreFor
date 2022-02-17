@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+
 exports.register = async (req, res) => {
   const { nom, prenom, email, password,role } = req.body;
   try {
@@ -10,7 +11,7 @@ exports.register = async (req, res) => {
     const searchedUser = await User.findOne({ email });
 
     if (searchedUser) {
-      return res.status(400).send({ msg: "email already exist" });
+      return res.status(400).send({ msg: "email existe déjà" });
     }
     // hash password
     const salt = 10;
@@ -36,7 +37,7 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ msg: "can not save the user" });
+    res.status(500).send({ msg: "impossible de sauvegarder l'utilisateur" });
   }
 };
 
@@ -47,13 +48,13 @@ exports.login = async (req, res) => {
     const searchedUser = await User.findOne({ email });
     // if thhe email not exist
     if (!searchedUser) {
-      return res.status(400).send({ msg: "bad Credential" });
+      return res.status(400).send({ msg: "mauvais identifiant" });
     }
     // password are equals
     const match = await bcrypt.compare(password, searchedUser.password);
 
     if (!match) {
-      return res.status(400).send({ msg: "bad Credential" });
+      return res.status(400).send({ msg: "mauvais identifiant" });
     }
     // generate a token
     const payload = {
@@ -69,7 +70,7 @@ exports.login = async (req, res) => {
       .send({ user: searchedUser, msg: "success", token: ` Bearer ${token}` });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ msg: "can not get the user" });
+    res.status(500).send({ msg: "ne peut pas obtenir l'utilisateur" });
   }
 };
 
@@ -82,12 +83,48 @@ exports.DeleteOneUser= async (req, res) => {
 
   try {
         const result = await User.deleteOne({ _id: req.params.id })
-        result.n
-              ? res.send({ message: "user deleted" })
-              : res.send({ message: "there is no user with this id" });
+        result
+              ? res.send({ message: "utilisateur supprimé" })
+              : res.send({ message: "il n'y a pas d'utilisateur avec cet identifiant" });
 
   } catch (error) {
-        res.status(400).send({ message: "there is no user with this id" });
+        res.status(400).send({ message: "il n'y a pas d'utilisateur avec cet identifiant" });
+
+  }
+};
+
+
+//get all user
+exports.GetAllUser = async (req,res)=>{
+  try {
+    const result = await User.find().populate("formation")
+    res.status(200).send({ response: result, message: "obtenir utilisateur avec succes" });
+} catch (error) {
+    res.status(400).send({ message: "ne peut pas obtenir l'utilisateur" });
+}
+};
+
+//update a user by id
+exports.UpdateUser= async (req, res) => {
+  try {
+        const result = await User.updateOne(
+              { _id: req.params.id },
+              { $set: { ...req.body } })
+        result.nModified ?
+              res.send({ message: "profile mis à jour", user: req.body }) :
+              res.send({ message: "profile déjà mis à jour", user: req.body })
+  } catch (error) {
+        res.status(400).send({ message: "il n'y a pas d'utilisateur avec cet identifiant" });
+  }
+};
+
+//GET one User
+exports.GetOneUser = async (req, res) => {
+  try {
+        const result = await User.findOne({ _id: req.params.id })
+        res.send({ response: result, message: "obtenir l'utilisateur avec succès" });
+  } catch (error) {
+        res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });
   }
 };
 

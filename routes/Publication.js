@@ -23,7 +23,7 @@ router.get("/",controllers.GetAllPublication );
 
 //@methode GET
 //@desc GET one publication
-//@path : http://localhost:8999/user/publication
+//@path : http://localhost:8999/user/publication/id
 //Parms id
 router.get("/:id", controllers.GetOnePublication);
 
@@ -31,7 +31,7 @@ router.get("/:id", controllers.GetOnePublication);
 
 //@method DELETE
 //@desc delete one publication by id
-//@path : http://localhost:8999/user/publication
+//@path : http://localhost:8999/user/publication/id
 //@Params id
 router.delete("/:id", controllers.DeleteOnePublication);
 
