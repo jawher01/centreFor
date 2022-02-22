@@ -3,8 +3,7 @@ const router = express.Router();
 const controllers=require("../controllers/comment");
 
 //post comment
-router.post("/:idPub", controllers.Postcomment);
+router.post("/", controllers.Postcomment);
 
 module.exports = router;
-
 

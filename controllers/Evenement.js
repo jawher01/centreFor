@@ -15,7 +15,7 @@ exports.PostEvenement = async (req, res) => {
 //GET all evenement
 exports.GetAllEvenement= async (req, res) => {
       try {
-            const result = await evenement.find()
+            const result = await evenement.find().populate("user")
             if(result){
             res.send({ response: result, message: "avoir evenements avec succès" });
             }else{
@@ -29,7 +29,7 @@ exports.GetAllEvenement= async (req, res) => {
 //GET one evenement
 exports.GetOneEvenement = async (req, res) => {
       try {
-            const result = await evenement.findOne({ _id: req.params.id })
+            const result = await evenement.findOne({ _id: req.params.id }).populate("user")
             res.send({ response: result, message: "avoir evenement avec succès" });
       } catch (error) {
             res.status(400).send({ message: "il n'y a pas de evenement avec cet identifiant" });

@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const controllers=require("../controllers/Publication");
-const passport = require('passport');
-const user=require("../models/User");
-const Publication = require("../models/Publication");
+
+
 
 
 
@@ -41,7 +40,8 @@ router.delete("/:id", controllers.DeleteOnePublication);
 //@Params id body
 router.put("/:id", controllers.UpdatePublication);
 
-
+router.patch('/likepost/:id', controllers.likePost);
+router.patch('/unlikepost/:id', controllers.unlikePost);
 
 module.exports = router;
 

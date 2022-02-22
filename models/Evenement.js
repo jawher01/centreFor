@@ -12,8 +12,13 @@ const EvenementSchema=new mongoose.Schema({
     },
     img:{
         type:String,
+    },
+    participant:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
     }
 },
+
 {
     timestamps:true,
 }

@@ -22,7 +22,8 @@ const UserSchema=new mongoose.Schema({
     role:{
         required:true,
         type:String,
-        enum:["admin","etudiant","proffeseur","admin superieur"],
+        enum:["modirateur","etudiant","proffeseur","admin superieur","editeur" ],
+
     },
     img:{ 
         type:String,
@@ -43,10 +44,15 @@ const UserSchema=new mongoose.Schema({
     salaire:{
         type:String,
     },
-    formation:{
+    formation:[{
             type: mongoose.Schema.Types.ObjectId,
             ref: "formation",
-    },
+    }],
+    publication:[{
+        type: mongoose.Schema.Types.ObjectId,
+            ref: "publication",
+    }]
+              
 },
 {
     timestamps:true,

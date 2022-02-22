@@ -1,6 +1,5 @@
 const formation = require("../models/Formation");
 
-
 //post a formation
 exports.PostFormation = async (req, res) => {
       try {
@@ -10,7 +9,7 @@ exports.PostFormation = async (req, res) => {
       } catch (error) {
             res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
       }
-    }
+};
 
 //GET all formation
 exports.GetAllFormation = async (req, res) => {
@@ -34,13 +33,11 @@ exports.GetOneFormation = async (req, res) => {
 
 //delete one formation by id
 exports.DeleteOneFormation = async (req, res) => {
-
       try {
             const result = await formation.deleteOne({ _id: req.params.id })
             result
                   ? res.send({ message: "formation supprimé" })
                   : res.send({ message: "il n'y a pas des formations avec cet identifiant" });
-
       } catch (error) {
             res.status(400).send({ message: "il n'y a pas des formations avec cet identifiant" });
       }

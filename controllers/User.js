@@ -97,7 +97,7 @@ exports.DeleteOneUser= async (req, res) => {
 //get all user
 exports.GetAllUser = async (req,res)=>{
   try {
-    const result = await User.find().populate("formation")
+    const result = await User.find().populate("formation").populate("publication")
     res.status(200).send({ response: result, message: "obtenir utilisateur avec succes" });
 } catch (error) {
     res.status(400).send({ message: "ne peut pas obtenir l'utilisateur" });
@@ -121,7 +121,7 @@ exports.UpdateUser= async (req, res) => {
 //GET one User
 exports.GetOneUser = async (req, res) => {
   try {
-        const result = await User.findOne({ _id: req.params.id })
+        const result = await User.findOne({ _id: req.params.id }).populate("formation").populate("publication")
         res.send({ response: result, message: "obtenir l'utilisateur avec succès" });
   } catch (error) {
         res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });

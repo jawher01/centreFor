@@ -45,7 +45,7 @@ router.get("/current", isAuth(), controllers.current);
 //@desc delete one user by id
 //@path : http://localhost:8999/admin-sup/:id
 //@Params id
-router.delete("/admin-sup/:id", controllers.DeleteOneUser);
+router.delete("/admin/:id", controllers.DeleteOneUser);
 
 
 
@@ -53,7 +53,7 @@ router.delete("/admin-sup/:id", controllers.DeleteOneUser);
 //@desc get all user 
 //@path : http://localhost:8999/admin-sup
 //@Params 
-router.get("/admin-sup",controllers.GetAllUser)
+router.get("/admin/user",controllers.GetAllUser)
 
 
 //@method PUT

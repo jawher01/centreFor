@@ -1,36 +1,48 @@
+
+
 const publication = require("../models/Publication");
-
-
+const ObjectID = require("mongoose").Types.ObjectId;
 
 //post a publication
 exports.Postpublication = async (req, res) => {
       try {
             const newPublication = new publication({ ...req.body });
             const response = await newPublication.save();
-            res.send({ response: response, message: "pub is saved" });
+            res.send({ response: response, message: "publication enregistrer" });
       } catch (error) {
-            res.status(404).send({ message: "can not save it" }, error);
+            res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
       }
 };
+
+
 
 //GET all publication
 exports.GetAllPublication = async (req, res) => {
       try {
-            const result = await publication.find()
+            const result = await publication.find().populate("user").populate({ path:"comments",
+                         populate: {
+                                    path: 'user'
+                              }
+                          
+            })
             
-            res.send({ response: result, message: "getting publications successfully" });
+            res.send({ response: result, message: "avoir publication avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "can not get pulications" });
+            res.status(400).send({ message: "ne peut pas obtenir le publication" });
       }
 };
 
 //GET one publication
 exports.GetOnePublication = async (req, res) => {
       try {
-            const result = await publication.findOne({ _id: req.params.id })
-            res.send({ response: result, message: "getting publication successfully" });
+            const result = await publication.findOne({ _id: req.params.id }).populate("user").populate({ path:"comments",
+            populate: {
+                       path: 'user'
+                 }
+            })
+            res.send({ response: result, message: "avoir publication avec succès" });
       } catch (error) {
-            res.status(400).send({ message: "there is no publication with this id" });
+            res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });
       }
 };
 
@@ -40,12 +52,14 @@ exports.DeleteOnePublication = async (req, res) => {
       try {
             const result = await publication.deleteOne({ _id: req.params.id })
             result
-                  ? res.send({ message: "publication deleted" })
-                  : res.send({ message: "there is no publication with this id" });
+                  ? res.send({ message: "publication supprimé" })
+                  : res.send({ message: "il n'y a pas de publication avec cet identifiant" });
+            } 
 
-      } catch (error) {
-            res.status(400).send({ message: "there is no publication with this id" });
+       catch (error) {
+            res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });
       }
+      
 };
 
 //update a publication by id
@@ -55,10 +69,62 @@ exports.UpdatePublication = async (req, res) => {
                   { _id: req.params.id },
                   { $set: { ...req.body } })
             result.nModified ?
-                  res.send({ message: "publication updated", user: req.body }) :
-                  res.send({ message: "publication already updated", user: req.body })
+                  res.send({ message: "publication mis à jour", user: req.body }) :
+                  res.send({ message: "publication déjà mis à jour", user: req.body })
       } catch (error) {
-            res.status(400).send({ message: "there is not publication with this id" });
+            res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });
       }
 };
 
+
+
+//post like
+exports.likePost = async (req, res) => {
+  
+      if (!ObjectID.isValid(req.params.id))
+      return res.status(400).send("ID unknown : " + req.params.id);
+  
+        await publication.findByIdAndUpdate(
+           {_id:req.params.id},
+          {
+            $addToSet: { likers: req.body.id },
+          },
+          { new: true },
+          
+        ).then(function (err) {
+          if (!err) {
+            res.status(200).send("likes avec suucces");
+          } else {
+              throw err;
+          }
+      }). catch (function (err) {
+           console.log(err)
+        res.status(400).send(err);
+      })
+};
+
+
+//post unlike
+exports.unlikePost = async (req, res) => {
+      if (!ObjectID.isValid(req.params.id))
+        return res.status(400).send("ID unknown : " + req.params.id);
+      
+      
+          await publication.findByIdAndUpdate(
+            req.params.id,
+            {
+              $pull: { likers: req.body.id },
+            },
+            { new: true },
+          ).then (function (err)  {
+            if (!err) {
+                  res.status(200).send("unlikes avec suucces");
+                } else {
+                    throw err;
+                }
+        
+        } ).catch  (function (err) {
+            console.log(err)
+         res.status(400).send(err);
+       })
+};
