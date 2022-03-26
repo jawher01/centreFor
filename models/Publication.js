@@ -3,6 +3,7 @@ const schema = mongoose.Schema;
 const PubSchema = new schema({
     nom: {
         type: String,
+        required: true,
     },
     titre: {
         type: String,

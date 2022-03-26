@@ -23,7 +23,6 @@ const UserSchema=new mongoose.Schema({
         required:true,
         type:String,
         enum:["modirateur","etudiant","proffeseur","admin superieur","editeur" ],
-
     },
     img:{ 
         type:String,
@@ -52,8 +51,8 @@ const UserSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
             ref: "publication",
     }]
-              
 },
+
 {
     timestamps:true,
 }

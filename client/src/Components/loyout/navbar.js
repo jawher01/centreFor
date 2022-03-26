@@ -1,5 +1,7 @@
 import React from 'react'
 import { Nav,Navbar,Container } from 'react-bootstrap';
+import { Link } from "react-router-dom";
+
 const navbar = () => {
   return (
     <div>
@@ -7,9 +9,9 @@ const navbar = () => {
     <Container>
     <Navbar.Brand href="#home">Navbar</Navbar.Brand>
     <Nav className="me-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#features">Features</Nav.Link>
-      <Nav.Link href="#pricing">Pricing</Nav.Link>
+      <Nav.Link href="contact"><Link to="/contact">contact</Link></Nav.Link>
+      <Nav.Link href="about us"><Link to="/about">about us</Link></Nav.Link>
+      <Nav.Link href="login">   <Link to="/login">login</Link></Nav.Link>
     </Nav>
     </Container>
   </Navbar></div>

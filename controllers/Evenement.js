@@ -16,11 +16,9 @@ exports.PostEvenement = async (req, res) => {
 exports.GetAllEvenement= async (req, res) => {
       try {
             const result = await evenement.find().populate("user")
-            if(result){
+          
             res.send({ response: result, message: "avoir evenements avec succès" });
-            }else{
-                res.status(403).send({message:"ne peut pas obtenir l'evenements"})
-            }
+           
       } catch (error) {
             res.status(400).send({ message: "ne peut pas obtenir l'evenements" });
       }

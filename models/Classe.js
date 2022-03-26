@@ -15,10 +15,18 @@ const ClasseSchema=new mongoose.Schema({
     calendrier:{
         type:String,
     },
-    user: [{
+    etudiant: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
     }],
+    professeur: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
+    }],
+    formation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "formation",
+    },
 },
 {
     timestamps:true,

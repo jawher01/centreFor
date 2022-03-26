@@ -43,7 +43,7 @@ router.get("/current", isAuth(), controllers.current);
 
 //@method DELETE
 //@desc delete one user by id
-//@path : http://localhost:8999/admin-sup/:id
+//@path : http://localhost:6500/admin/:id
 //@Params id
 router.delete("/admin/:id", controllers.DeleteOneUser);
 
@@ -51,7 +51,7 @@ router.delete("/admin/:id", controllers.DeleteOneUser);
 
 //@method GET
 //@desc get all user 
-//@path : http://localhost:8999/admin-sup
+//@path : http://localhost:6500/admin/user
 //@Params 
 router.get("/admin/user",controllers.GetAllUser)
 
@@ -60,14 +60,14 @@ router.get("/admin/user",controllers.GetAllUser)
 //@desc update a profile by id
 //@path : http://localhost:8999/profile/:id
 //@Params id body
-router.put("/profile/:id",controllers.UpdateUser)
+router.put("/profil/:id",controllers.UpdateUser)
 
 
 
 //@method GET
 //@desc getting user by id
-//@path : http://localhost:8999/admin/:id
+//@path : http://localhost:8999/user/profil/:id
 //@Params id body
-router.get("/admin/:id",controllers.GetOneUser)
+router.get("/user/profil/:id",controllers.GetOneUser)
 
 module.exports = router;

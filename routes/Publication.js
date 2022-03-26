@@ -40,8 +40,10 @@ router.delete("/:id", controllers.DeleteOnePublication);
 //@Params id body
 router.put("/:id", controllers.UpdatePublication);
 
-router.patch('/likepost/:id', controllers.likePost);
-router.patch('/unlikepost/:id', controllers.unlikePost);
+
+
+router.patch("/likepost/:id", controllers.likePost);
+router.patch("/unlikepost/:id", controllers.unlikePost);
 
 module.exports = router;
 

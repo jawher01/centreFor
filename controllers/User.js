@@ -33,11 +33,11 @@ exports.register = async (req, res) => {
     res.status(200).send({
       user: newUserToken,
       msg: "user is saved",
-      token: ` Bearer ${token}`,
+      token: `Bearer ${token}`,
     });
   } catch (error) {
     console.log(error);
-    res.status(500).send({ msg: "impossible de sauvegarder l'utilisateur" });
+    res.status(400).send({ msg: "impossible de sauvegarder l'utilisateur" });
   }
 };
 
@@ -67,10 +67,9 @@ exports.login = async (req, res) => {
     // send the user
     res
       .status(200)
-      .send({ user: searchedUser, msg: "success", token: ` Bearer ${token}` });
+      .send({ user: searchedUser, msg: "success", token: `Bearer ${token}` });
   } catch (error) {
-    console.log(error);
-    res.status(500).send({ msg: "ne peut pas obtenir l'utilisateur" });
+    res.status(400).send({ msg: "ne peut pas obtenir l'utilisateur" });
   }
 };
 
@@ -80,7 +79,6 @@ exports.current = (req, res) => {
 
 
 exports.DeleteOneUser= async (req, res) => {
-
   try {
         const result = await User.deleteOne({ _id: req.params.id })
         result
@@ -111,10 +109,10 @@ exports.UpdateUser= async (req, res) => {
               { _id: req.params.id },
               { $set: { ...req.body } })
         result.nModified ?
-              res.send({ message: "profile mis à jour", user: req.body }) :
-              res.send({ message: "profile déjà mis à jour", user: req.body })
+              res.send({ message: "profile mis à jour" }) :
+              res.send({ message: "profile déjà mis à jour"})
   } catch (error) {
-        res.status(400).send({ message: "il n'y a pas d'utilisateur avec cet identifiant" });
+        res.status(400).send({message:"il n'y a pas de profil"});
   }
 };
 
@@ -124,7 +122,7 @@ exports.GetOneUser = async (req, res) => {
         const result = await User.findOne({ _id: req.params.id }).populate("formation").populate("publication")
         res.send({ response: result, message: "obtenir l'utilisateur avec succès" });
   } catch (error) {
-        res.status(400).send({ message: "il n'y a pas de publication avec cet identifiant" });
+        res.status(400).send({ message: "il n'y a pas de user avec cet identifiant" });
   }
 };
 

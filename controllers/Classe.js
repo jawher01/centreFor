@@ -7,16 +7,16 @@ exports.PostClasse = async (req, res) => {
       try {
             const newClasse = new classe({ ...req.body });
             const response = await newClasse.save();
-            res.send({ response: response, message: "classe enregistrer" });
+            res.status(200).send({ response: response, message: "classe enregistrer" });
       } catch (error) {
-            res.status(404).send({ message: "ne peut pas le sauvegarder" }, error);
+            res.status(400).send({ message: "ne peut pas le sauvegarder" }, error);
       }
 };
 
 //GET all classes
 exports.GetAllClasse = async (req, res) => {
       try {
-            const result = await classe.find().populate("user")
+            const result = await classe.find().populate("etudiant").populate("professeur").populate("formation")
             res.send({ response: result, message: "avoir classe avec succès" });
       } catch (error) {
             res.status(400).send({ message: "ne peut pas obtenir classe" });
@@ -27,7 +27,7 @@ exports.GetAllClasse = async (req, res) => {
 //GET one classe
 exports.GetOneClasse = async (req, res) => {
       try {
-            const result = await classe.findOne({ _id: req.params.id }).populate("user")
+            const result = await classe.findOne({ _id: req.params.id }).populate("etudiant").populate("professeur").populate("formation")
             res.send({ response: result, message: "avoir classe avec succès" });
       } catch (error) {
             res.status(400).send({ message: "il n'y a pas de classe avec cet identifiant" });

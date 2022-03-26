@@ -9,8 +9,6 @@ console.clear();
      {
          useNewUrlParser : true , 
           useUnifiedTopology : true , 
-         
-          
           
        }, 
        async (err) => {

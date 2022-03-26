@@ -16,7 +16,7 @@ exports.Postcomment = async (req, res) => {
                    content: req.body.content,
                 
                    });
-                   comment.user=USER._id;
+                   comment.user=USER._id
                    comment.publication=pub._id
           let resultat=   await comment.save();
                pub.comments.push(resultat._id);
