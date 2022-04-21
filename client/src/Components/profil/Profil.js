@@ -11,13 +11,14 @@ export default function Profil() {
 
     const user = useSelector(state => state.userReducer.user);
     const dispatch = useDispatch();
-    console.log(user._id)
- 
+    
+ console.log(user)
    
   
     useEffect(() => {
       dispatch(current());
-    },[]);
+    },[current]);
+   
  
   return (
       <div>
@@ -100,7 +101,7 @@ export default function Profil() {
          
           id="filled-disabled"
           label="num_tel"
-          defaultValue={user.NumTel}
+          defaultValue={user.num_tel}
           InputProps={{
             readOnly: true,
           }}
@@ -138,7 +139,7 @@ export default function Profil() {
     </Box>
     </div>
     <div style={{marginLeft:"20%"}}>
-    <Modal id={user._id} />
+    <Modal />
     </div>
     </div>
   );

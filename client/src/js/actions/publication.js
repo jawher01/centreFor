@@ -43,18 +43,17 @@ export const postPublication = (user) => async (dispatch) => {
     .catch((err) => alert(err));
 };
 
-export const editPublication = (idPub, publication) => (dispatch) => {
+export const editPublication = (id, publication) => (dispatch) => {
   axios
-    .put(`http://localhost:6500/user/publication/${idPub}`, publication)
+    .put(`http://localhost:6500/user/publication/${id.id}`, publication)
     .then((res) => {
       alert("Publication modifier avec succes");
 
       dispatch({
         type: EDIT_PUBLICATION,
-        payload: { _id: idPub, ...res.data.user },
+        payload: { ...res.data.user },
       });
     })
-    .then(dispatch(getPublication(idPub)))
     .catch((err) => console.log(err));
 };
 
@@ -62,7 +61,6 @@ export const addComment = (comment) => {
   axios
     .post(`http://localhost:6500/user/publication/comment`, comment)
     .then((res) => {
-      console.log(res);
       alert("comment ajouter avec succes");
     })
     .catch((err) => console.log(err));
@@ -70,17 +68,19 @@ export const addComment = (comment) => {
 
 export const likePost = (postId, userId) => async (dispatch) => {
   axios
-    .patch(`http://localhost:6500/user/publication/likepost/${postId}`,userId)
+    .patch(`http://localhost:6500/user/publication/likepost/${postId}`,{userId})
     .then((res) => {
+      console.log(res)
       dispatch({ type: LIKE_POST, payload: { postId, userId } });
     })
-    .catch((err) => console.log("error : ", err));
+    .catch((err) => console.log(err));
 };
 
 export const unlikePost = (postId, userId) => async (dispatch) => { 
       axios
-      .patch(`http://localhost:6500/user/publication//unlikepost/${postId}`, userId)
+      .patch(`http://localhost:6500/user/publication//unlikepost/${postId}`,{userId})
       .then((res) => {
+       
         dispatch({ type: UNLIKE_POST, payload: { postId, userId } });
       })
       .catch((err) => console.log(err));

@@ -47,16 +47,7 @@ import {
     case GET_USER:
                 return { ...state, compte: payload};
     case EDIT_USER:            
-                return {
-                    ...state,
-                    user:
-                        state
-                            .user
-                            .map(p => p._id !== payload._id ? p : {...p, ...payload})
-                };
-    
-    
-         
+                return { ...state,loadUser: false, compte:payload};
       default:
         return state;
     }

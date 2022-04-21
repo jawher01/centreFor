@@ -22,7 +22,7 @@ const ProfesseurList = () => {
         profs.push(users[i]);
     }
   }
-  console.log(profs)
+  
   
   
   useEffect(() => {

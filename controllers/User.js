@@ -5,8 +5,14 @@ const bcrypt = require("bcryptjs");
 exports.register = async (req, res) => {
   const { nom, prenom, email, password,role } = req.body;
   try {
-    const newUser = new User({ nom, prenom, email, password,role });
-
+    const newUser = new User({ nom, prenom, email, password,role});
+    if (req.files.length > 0) {
+      req.files.map(file => {
+        newUser.receipt = "http://127.0.0.1:3000/" + file.path
+      })
+    } else {
+      newUser.receipt = "public/default.png"
+    }
     //   check if the email exist
     const searchedUser = await User.findOne({ email });
 

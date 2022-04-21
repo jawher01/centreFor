@@ -1,5 +1,5 @@
 const { check, validationResult } = require("express-validator");
-
+//zeyda
 // validation register
 exports.registerRules = () => [
   check("nom", "nom is required").notEmpty(),

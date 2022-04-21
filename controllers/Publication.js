@@ -5,6 +5,13 @@ const ObjectID = require("mongoose").Types.ObjectId;
 exports.Postpublication = async (req, res) => {
   try {
     const newPublication = new publication({ ...req.body });
+    if (req.files.length > 0) {
+      req.files.map(file => {
+        newPublication.img = "http://127.0.0.1:3000/" + file.path
+      })
+    } else {
+      newPublication.img = "public/default.png"
+    }
     const response = await newPublication.save();
     res
       .status(200)

@@ -22,17 +22,34 @@ const style = {
 
 export default function BasicModal() {
   const dispatch = useDispatch();
+  const [receipt,setReceipt]=useState({ preview: '', data: '' })
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("proffeseur");
-
+  
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-   const Role="proffeseur"
+
+//hethy ghalta
+  const [image, setImage] = useState({ preview: '', data: '' })
+  const [status, setStatus] = useState('')
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    let formData = new FormData()
+    formData.append('file', image.data)
+    const response = await fetch('http://localhost:5000/image', {
+      method: 'POST',
+      body: formData,
+    })
+    if (response) setStatus(response.statusText)
+  }
+
+
   return (
+   
     <div>
       <Button onClick={handleOpen}>Ajouter</Button>
       <Modal
@@ -54,6 +71,15 @@ export default function BasicModal() {
               noValidate
               autoComplete='off'
             >
+         
+            <TextField
+            id='outlined-rred'
+            label='receipt'
+            type="file"
+            onChange={(e) => setReceipt('receipt', e.target.files[0])}
+           
+          />
+
               <TextField
                 required
                 id='outlined-required'
@@ -89,10 +115,10 @@ export default function BasicModal() {
                 <TextField
                   id='filled-read-only-input'
                   label='role'
-                  defaultValue={Role}
+                  defaultValue={role}
                   
                   InputProps={{
-                    readOnly: true,
+                    readOnly: false,
                   }}
                 />
               </div>
@@ -102,7 +128,7 @@ export default function BasicModal() {
               type='submit'
               onClose={handleClose}
               onClick={() =>
-                dispatch(registerUser({ nom, prenom, email, password, role }))
+                dispatch(registerUser({ nom, prenom, email, password, role,receipt }))
               }
             >
               ajouter

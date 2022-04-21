@@ -5,10 +5,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const LikeButton = ({ publication }) => {
   const [liked, setLiked] = useState(false);
-
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-
   const like = () => {
     dispatch(likePost(publication._id, user._id));
     setLiked(true);
@@ -23,7 +21,6 @@ const LikeButton = ({ publication }) => {
     if (publication.likers.includes(user._id)) setLiked(true);
     else setLiked(false);
   }, [user._id, publication.likers, liked]);
-  
 
   return (
     <div className='like-container'>

@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 const schema = mongoose.Schema;
 const PubSchema = new schema({
+    img: { 
+        type: String,
+        default:"../public/default.png"
+    },
     nom: {
         type: String,
         required: true,
@@ -20,7 +24,6 @@ const PubSchema = new schema({
     ],
     likers: {
         type: [String],
-       
     },
     user: 
     {

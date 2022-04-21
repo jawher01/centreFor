@@ -32,7 +32,7 @@ const ModalSupUser = (user) => {
                 <Button variant="secondary" onClick={handleClose}>
                   fermer
                 </Button>
-                <Button variant="primary"  onClick={() => dispatch(deleteUser(user.user._id))}>
+                <Button variant="primary"  onClick={() => dispatch(deleteUser(user.prof._id))}>
                   confirmer
                 </Button>
               </Modal.Footer>

@@ -13,13 +13,20 @@ import {
   GET_USER,
 } from "../const/user";
 export const registerUser = (user) => async (dispatch) => {
+  console.log(user)
+  let formData = new FormData()
+  formData.append('nom', user.nom)
+  formData.append('prenom', user.prenom)
+  formData.append('email', user.email)
+  formData.append('password', user.password)
+  formData.append('role', user.role)
   dispatch({ type: LOAD_USER });
   try {
-    const result = await axios.post("http://localhost:6500/register", user);
+    const result = await axios.post("http://localhost:6500/register", formData);
     dispatch({ type: REGISTER_USER, payload: result.data });
-    alert("user enregistrer avec succes")
+    alert("user enregistrer avec succes");
   } catch (error) {
-    const { errors,msg } = error.response.data;
+    const { errors, msg } = error.response.data;
     if (Array.isArray(errors)) {
       errors.forEach((err) => alert(err.msg));
     }
@@ -93,13 +100,12 @@ export const getUser = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const editUser = (id, user) => (dispatch) => {
+export const editUser = (id, users) => (dispatch) => {
   axios
-    .put(`http://localhost:6500/profil/${id}`,user)
+    .put(`http://localhost:6500/profil/${id.id}`, users)
     .then((res) => {
       alert("user modifier avec succes");
-
-      dispatch({ type: EDIT_USER, payload: { ...res.data.user } });
+      dispatch({ type: EDIT_USER, payload: { ...res.data.users } });
     })
     .catch((err) => console.log(err));
 };

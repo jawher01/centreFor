@@ -14,9 +14,6 @@ const PublicationList = () => {
   const loadPublications = useSelector(
     (state) => state.publicationReducer.loadPublications
   );
- 
-
- 
   useEffect(() => {
     dispatch(getAllPublications());
   }, [getAllPublications]);

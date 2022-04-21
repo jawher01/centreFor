@@ -21,29 +21,27 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal(idUser) {
-  
-  const User = idUser.id;
-  console.log(User)
-  const [nom, setNom] = useState("");
-  const [prenom, setPrenom] = useState("");
-  const [adresse, setAdresse] = useState("");
-  const [niveau_scolaire, setNiveau_Scolaire] = useState("");
-  const [numtel, setNumTel] = useState("");
+export default function BasicModal() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userReducer.user);
-  
-  
+  const [users, setUsers] = useState({
+    nom: user.nom ? user.nom : "",
+    prenom: user.prenom ? user.prenom : "",
+    adresse: user.adresse ? user.adresse : "",
+    niveau_scolaire: user.niveau_scolaire ? user.niveau_scolaire : "",
+    num_tel: user.num_tel ? user.num_tel : "",
+  });
 
-
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-      dispatch(
-        editUser({ _id:User, nom, prenom, adresse, niveau_scolaire, numtel })
-      )
+  const handleChange = (e) => {
+    e.preventDefault();
+    setUsers({ ...users, [e.target.name]:e.target.value});
   };
-  
+ 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(editUser({ id: user._id }, users));
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -74,8 +72,9 @@ export default function BasicModal(idUser) {
                 required
                 id='outlined-required'
                 label='nom'
-                defaultValue={user.nom}
-                onChange={(e) => setNom(e.target.value)}
+                defaultValue={users.nom}
+                name="nom"
+                onChange={handleChange}
                 InputProps={{
                   readOnly: false,
                 }}
@@ -84,8 +83,9 @@ export default function BasicModal(idUser) {
                 required
                 id='outlined-require'
                 label='prenom'
-                defaultValue={user.prenom}
-                onChange={(e) => setPrenom(e.target.value)}
+                defaultValue={users.prenom}
+                name="prenom"
+                onChange={handleChange}
                 InputProps={{
                   readOnly: false,
                 }}
@@ -94,8 +94,9 @@ export default function BasicModal(idUser) {
                 <TextField
                   id='filled-required'
                   label='adresse'
-                  defaultValue={user.adresse}
-                  onChange={(e) => setAdresse(e.target.value)}
+                  defaultValue={users.adresse}
+                  name="adresse"
+                  onChange={handleChange}
                   InputProps={{
                     readOnly: false,
                   }}
@@ -103,8 +104,9 @@ export default function BasicModal(idUser) {
                 <TextField
                   id='filled-disabled'
                   label='num_tel'
-                  defaultValue={user.NumTel}
-                  onChange={(e) => setNumTel(e.target.value)}
+                  defaultValue={users.num_tel}
+                  name="num_tel"
+                  onChange={handleChange}
                   InputProps={{
                     readOnly: false,
                   }}
@@ -112,9 +114,10 @@ export default function BasicModal(idUser) {
 
                 <TextField
                   id='filled-read-only-input'
-                  label='niveaux_scolaire'
-                  defaultValue={user.niveau_scolaire}
-                  onChange={(e) => setNiveau_Scolaire(e.target.value)}
+                  label='niveau_scolaire'
+                  defaultValue={users.niveau_scolaire}
+                  name="niveau_scolaire"
+                  onChange={handleChange}
                   InputProps={{
                     readOnly: false,
                   }}

@@ -1,18 +1,32 @@
 const express = require("express");
 const router = express.Router();
 const controllers=require("../controllers/Publication");
+const multer = require('multer');
 
 
 
-
-
+//dfefinir un storage pour ajouter une image
+const storage =multer.diskStorage({
+    //destination de l'image
+    destination:function(req,file,callback){
+      callback(null,'./public/');
+    },
+    filename:function(req,file,callback){
+        callback(null,Date.now()+ '-' + file.originalname) ;
+    }
+  });
+  
+  const upload=multer({
+    storage: storage,
+   
+  })
 
 
 //@POST method
 //@desc post a publication
 //@path : http://localhost:8999/user/publication
 //Params body
-router.post("/", controllers.Postpublication);
+router.post("/", upload.any('image'), controllers.Postpublication);
 
 
 //@methode GET
@@ -38,7 +52,7 @@ router.delete("/:id", controllers.DeleteOnePublication);
 //@desc update a publication by id
 //@path : http://localhost:8999/user/publication
 //@Params id body
-router.put("/:id", controllers.UpdatePublication);
+router.put("/:id",  controllers.UpdatePublication);
 
 
 

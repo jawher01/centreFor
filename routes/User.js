@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const controllers = require("../controllers/user");
+const multer = require('multer');
 const {
   loginRules,
   registerRules,
@@ -9,6 +10,22 @@ const {
 
 const isAuth = require("../middleware/passport");
 
+//dfefinir un storage pour ajouter une image
+const storage =multer.diskStorage({
+  //destination de l'image
+  destination:function(req,file,callback){
+    callback(null,'./public/');
+  },
+  filename:function(req,file,callback){
+      callback(null,Date.now()+ '-' + file.originalname) ;
+  }
+});
+
+const upload=multer({
+  storage: storage,
+ 
+})
+
 
 
 //@method POST
@@ -16,7 +33,7 @@ const isAuth = require("../middleware/passport");
 // @PATH  http://localhost:8999/register
 // @Params  Body
 // register
-router.post("/register", registerRules(), validation, controllers.register);
+router.post("/register", upload.any('image'), controllers.register);
 
 
 

@@ -9,16 +9,15 @@ import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ModalSupression from "./ModalSupression";
 import TextField from "@mui/material/TextField";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import { addComment } from "../../js/actions/publication";
-import LikeButoon from "./LikeButton"
-
+import LikeButoon from "./LikeButton";
+import ModalUpdate from "./ModalUpdate";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -30,12 +29,12 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
 const Publication = ({ publication }) => {
+ 
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
   const user = useSelector((state) => state.userReducer.user);
-  
+
 
   const renderComment = (c, index) => (
     <div
@@ -58,41 +57,49 @@ const Publication = ({ publication }) => {
   };
 
   return (
-    <div >
-      <Card  style={{ width: "80%",marginLeft:"2%", marginTop:"5%",marginBottom:"20%"}}>
+    <div>
+      <Card
+        style={{
+          width: "80%",
+          marginLeft: "2%",
+          marginTop: "5%",
+          marginBottom: "20%",
+        }}
+      >
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label='recipe'>
               IMG
             </Avatar>
           }
-          action={<ModalSupression pub={publication._id} />}
           title={publication.nom}
           subheader={publication.titre}
         />
-
         <CardContent>
           <Typography variant='body2' color='text.secondary'>
             {publication.content}
           </Typography>
         </CardContent>
-        <div style={{marginBottom:"2%"}}>
-        <CardActions disableSpacing>
-          <IconButton aria-label='add to favorites'>
-            <LikeButoon  publication={publication}/>
-          </IconButton>
-          <IconButton aria-label='share'>
-            <ShareIcon />
-          </IconButton>
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label='show more'
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-        </CardActions>
+        <div style={{ marginBottom: "2%" }}>
+          <CardActions disableSpacing>
+            <IconButton aria-label='add to favorites'>
+              <LikeButoon publication={publication} />
+            </IconButton>
+          
+              <IconButton aria-label='share'>
+                <ModalUpdate pub={publication._id} />
+                <ModalSupression pub={publication._id} />
+              </IconButton>
+      
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label='show more'
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+          </CardActions>
         </div>
         <Collapse in={expanded} timeout='auto' unmountOnExit>
           <CardContent>
@@ -105,7 +112,6 @@ const Publication = ({ publication }) => {
                   publication: c.publication,
                 }))
                 .map(renderComment)}
-
               {comments.map((c) => ({ content: c })).map(renderComment)}
             </Typography>
             <TextField
@@ -118,12 +124,15 @@ const Publication = ({ publication }) => {
                 readOnly: false,
               }}
             />
-
             <Button
               variant='text'
               onClick={() => {
                 setComments([...comments, comment]);
-                addComment({ user:user._id,publication:publication._id,content:comment});
+                addComment({
+                  user: user._id,
+                  publication: publication._id,
+                  content: comment,
+                });
                 setComment("");
               }}
             >

@@ -17,6 +17,7 @@ connectDB();
 app.use(cors({origin: true, credentials: true}));
 app.use(express.json( {extended:false}));
 app.use(bodyParser.urlencoded({extended:false}))
+app.use(express.static('public'));
 
 app.use("/",require("./routes/User"))
 app.use("/formation",require("./routes/Formation"))
@@ -33,7 +34,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
   
   next();
-  console.log(error)
+
 });
 app.use((req, res, next) => {
   const err = new Error('Not Found');

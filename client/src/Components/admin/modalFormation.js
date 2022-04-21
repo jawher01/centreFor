@@ -10,14 +10,16 @@ const ModalFormation = (formation) => {
       <Button variant='primary' onClick={handleShow}>
         lire la suite
       </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>{formation.formation.nom}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div> prix:{formation.formation.prix}</div>
-          <div> prix:{formation.formation.prix}</div>
+        <div> prix:{formation.formation.prix}</div>
+          <div> type:{formation.formation.type}</div>
+          <div> duree:{formation.formation.duree}</div>
+          <div> date_debut:{formation.formation.date_debut}</div>
+          <div> date_fin:{formation.formation.date_fin}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
